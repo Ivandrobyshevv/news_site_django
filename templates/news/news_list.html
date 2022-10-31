@@ -1,0 +1,26 @@
+{% extends 'news/base.html' %}
+{% block content %}
+    <section>
+        <h2 class="fw-bold">Все новости</h2>
+        <div>
+            <div class="container">
+                <table class="table">
+                    <tbody>
+                    {% for news in news_list %}
+                        <tr>
+                            <td class="p-3">
+                                <a class="link-dark text-decoration-none"
+                                   href="{{ news.get_absolute_url }}">{{ news.title }}</a>
+                                <br>
+                                <small class="fw-lighter"></small>
+                                <small> <a class="link-secondary"
+                                           href="{{ news.category.get_absolute_url }}">{{ news.category }}</a></small>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+{% endblock %}

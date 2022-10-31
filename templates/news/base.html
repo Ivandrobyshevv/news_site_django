@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <div class="container mt-5">
+        <div class="row mb-5">
+            <div class="col-8 mt-5">
+                {% block content %}{% endblock %}
+            </div>
+            <div class="col mt-5">
+                {% include 'inc/new_news.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

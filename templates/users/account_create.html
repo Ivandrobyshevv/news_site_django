@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title  %}Аккаунт - {{ user.username| title }}{% endblock %}
+{% block main %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-3">
+                {% include 'inc/navmenu_account.html' %}
+            </div>
+            <div class="col">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <legend>{{ user.username|title }}</legend>
+                    <div class="mb-3">
+                        <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label">Логин</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="{{ form.first_name.id_for_label }}" class="form-label">Имя</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="col">
+                            <label for="{{ form.last_name.id_for_label }}" class="form-label">Фамилия</label>
+                            {{ form.last_name }}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Аккаунт - {{ user.username| title }}{% endblock %}
+{% block main %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-3">
+                {% include 'inc/navmenu_account.html' %}
+            </div>
+            <div class="col">
+                <form>
+                    <fieldset disabled>
+                        <legend>{{ user.username|title }}</legend>
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Email</label>
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                   placeholder="{{ user.email }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Логин</label>
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                   placeholder="{{ user.username }}">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="disabledTextInput" class="form-label">Имя</label>
+                                <input type="text" id="disabledTextInput" class="form-control"
+                                       placeholder="{{ user.first_name }}">
+                            </div>
+                            <div class="col">
+                                <label for="disabledTextInput" class="form-label">Фамилия</label>
+                                <input type="text" id="disabledTextInput" class="form-control"
+                                       placeholder="{{ user.last_name }}">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <a href="{% url 'account_create' %}" class="btn btn-primary">Изменить</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

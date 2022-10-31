@@ -1,0 +1,38 @@
+{% extends 'news/base.html' %}
+{% load static %}
+{% block title %}Новости{% endblock title %}
+{% block content %}
+    {% include 'inc/navmenu.html' %}
+    <hr>
+    <div class="offcanvas-lg offcanvas-end flex-grow-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel"
+         data-bs-scroll="true">
+        <div class="offcanvas-body p-lg-0">
+            <ul class="navbar-nav flex-row">
+                <li class="nav-item col-lg-auto">
+                    {% include 'inc/add_news.html' %}
+                </li>
+                <li class="nav-item col-lg-auto">
+                    <p class="text-secondary">{{ news.created_at|date:"d.m.y" }}</p>
+                </li>
+                <li class="nav-item col-lg-auto">
+                    <p class="text-secondary mx-3">{{ news.category }}</p>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+                <li class="nav-item col-6 col-lg-auto">
+                    <script src="https://yastatic.net/share2/share.js"></script>
+                    <div class="ya-share2" data-curtain data-size="m" data-color-scheme="whiteblack"
+                         data-services="vkontakte,odnoklassniki,telegram,twitter,whatsapp"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <h2>{{ news.title }}</h2>
+        <div class="card-body">
+            <img src="{{ news.photo.url }}" class="float-start p-2" width="300px" alt="...">
+            <p class="text">{{ news.content|safe }}</p>
+        </div>
+    </div>
+{% endblock %}

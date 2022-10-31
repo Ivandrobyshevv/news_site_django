@@ -1,0 +1,31 @@
+{% if user.is_authenticated %}
+    {% if news in user.interests.all %}
+        <li class="nav-item col-lg-auto">
+            <form action="{% url 'remove-or-add' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="news_id" value="{{ news.id }}">
+                <input type="hidden" name="remove" value="">
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <button style="border: none; outline: none; background-color: white" type="submit"><span
+                        class="material-symbols-outlined">do_not_disturb_on</span>
+                </button>
+            </form>
+        </li>
+    {% else %}
+        <li class="nav-item col-lg-auto">
+            <form action="{% url 'remove-or-add' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="news_id" value="{{ news.id }}">
+                <input type="hidden" name="add" value="">
+                <input type="hidden" name="user" value="{{ user.id }}">
+                <button style="border: none; outline: none; background-color: white" type="submit"><span
+                        class="material-symbols-outlined">add_circle</span>
+                </button>
+            </form>
+        </li>
+    {% endif %}
+{% else %}
+    <li>
+        <a href="{% url 'login' %}"><span class="material-symbols-outlined">add_circle</span></a>
+    </li>
+{% endif %}

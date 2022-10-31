@@ -1,0 +1,29 @@
+{% load news_tags %}
+{% new_news as news %}
+<table class="table bg-light ">
+    <thead>
+    <tr>
+        <th class="text-center" colspan="2">
+            <h2 class="fw-bold">Последние новости</h2>
+        </th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider">
+    {% for n in news %}
+        <tr>
+        <td><a class="link-dark text-decoration-none" href="{{ n.get_absolute_url }}">{{ n.title }}</a>
+            <br>
+            <small class="text-secondary">{{ n.created_at|date:"H:m" }}</small>
+        </td>
+        <td>
+            <img src="{{ n.photo.url }}" class="flex-shrink-0" width="100px" alt="...">
+        </td>
+    {% endfor %}
+        </tr>
+    <tr class="text-center">
+        <td colspan="2">
+            <a class="btn btn-outline-dark" href="#">Все новости</a>
+        </td>
+    </tr>
+    </tbody>
+</table>

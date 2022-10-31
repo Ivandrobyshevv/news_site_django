@@ -1,0 +1,21 @@
+{% load news_tags %}
+{% get_categories as categories %}
+<nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        {% if news.category %}
+            <li class="breadcrumb-item">{{ news.category }}:</li>
+        {% endif %}
+        <li class="breadcrumb-item "><a class="text-secondary text-decoration-none"
+                                        href="{% url 'homepage' %}">Все</a></li>
+        {% for cat in categories %}
+            {% if cat == object or cat == news.category %}
+                <li class="breadcrumb-item"><a class="link-dark">{{ cat }}</a></li>
+
+            {% else %}
+                <li class="breadcrumb-item"><a class="text-secondary text-decoration-none"
+                                               href="{{ cat.get_absolute_url }}">{{ cat }}</a></li>
+
+            {% endif %}
+        {% endfor %}
+    </ol>
+</nav>

@@ -1,0 +1,27 @@
+{% extends 'news/base.html' %}
+
+{% block content %}
+    <h1>{{ category }}</h1>
+    {% include 'inc/navmenu.html' %}
+    <hr>
+    <div>
+        <div class="container">
+            <table class="table">
+                <tbody>
+                {% for news in object.news.all %}
+                    <tr>
+                        <td class="p-3">
+                            <a class="link-dark text-decoration-none"
+                               href="{{ news.get_absolute_url }}">{{ news.title }}</a>
+                            <br>
+                            <small class="link-secondary text-decoration-none">{{ news.updated_ad|date:"H:m, d.m.Y" }}
+                                <a class="link-secondary"
+                                   href="{{ news.category.get_absolute_url }}">{{ news.category }}</a></small>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

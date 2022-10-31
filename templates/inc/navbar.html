@@ -1,0 +1,45 @@
+{% load news_tags %}
+{% get_categories as categories %}
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-2" href="{% url 'homepage' %}">Новостной сайт</a>
+        <button class="navbar-toggler bg-dark" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-body bg-dark">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 mb-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'homepage' %}">Главная</a>
+                    </li>
+                    {% for category in categories %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ category.get_absolute_url }}">{{ category }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% include 'inc/search.html' %}
+            </div>
+        </div>
+        <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="btn btn-link nav-link py-2 px-0 px-lg-2" href="{% url 'account' %}">{{ user.username }}</a>
+                </li>
+                <li class="nav-item py-1 col-12 col-lg-auto">
+                    <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+                    <hr class="d-lg-none text-white-50">
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-link nav-link py-2 px-0 px-lg-2" href="{% url 'logout' %}">Выйти</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="btn btn-link nav-link py-2 px-0 px-lg-2" href="{% url 'login' %}">Login</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
