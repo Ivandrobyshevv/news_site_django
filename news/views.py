@@ -1,10 +1,11 @@
 from django.db.models import Q
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, DetailView
 
-from users.models import User
+from users.models import User, Likes
 from .models import Categories, News
 
 
@@ -59,3 +60,34 @@ class RemoveOrAddNews(View):
             user = self.get_user(request)
             user.interests.add(request.POST.get('news_id'))
             return HttpResponseRedirect(reverse('news_detail', args=[self.get_slug_news(request)]))
+
+
+class AddLikeView(View):
+    """Добавление лайков к посту"""
+
+    def post(self, request):
+        news_id = int(request.POST.get("news_id"))
+        user_id = int(request.POST.get("user_id"))
+        url_form = request.POST.get('url_form')
+
+        user = User.objects.get(id=user_id)
+        news = News.objects.get(id=news_id)
+        try:
+            news_like = Likes.objects.get(news=news, user=user)
+        except Exception as e:
+            news_like = Likes(news=news, user=user, likes=True)
+            news_like.save()
+
+        return redirect(url_form)
+
+
+class RemoveLikeView(View):
+    """Удаление лайков к посту"""
+
+    def post(self, request):
+        news_like_id = int(request.POST.get("news_likes_id"))
+        url_form = request.POST.get('url_form')
+
+        news_like = Likes.objects.get(id=news_like_id)
+        news_like.delete()
+        return redirect(url_form)

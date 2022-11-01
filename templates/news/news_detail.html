@@ -34,5 +34,10 @@
             <img src="{{ news.photo.url }}" class="float-start p-2" width="300px" alt="...">
             <p class="text">{{ news.content|safe }}</p>
         </div>
+        {% if user.is_authenticated %}
+            <hr>
+            {% include 'inc/add_like.html' with news_post_id=news.id %}
+        {% else %}
+        {% endif %}
     </div>
 {% endblock %}
