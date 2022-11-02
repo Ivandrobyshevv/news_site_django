@@ -1,0 +1,16 @@
+{% load news_tags %}
+{% load user_tags %}
+{% news_letter as list %}
+{% get_categories as categories %}
+<h2>Подписка на рассылку</h2>
+<form action="{% url 'newsletter' %}" method="post">
+    {% csrf_token %}
+    {% for category in categories %}
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="{{ category.id }}"
+                       name="category" {% if  category in list %}checked{% else %}{% endif %}>
+                <label class="form-check-label" for="inlineCheckbox1">{{ category.name }}</label>
+            </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>

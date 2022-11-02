@@ -1,15 +1,15 @@
 from django.contrib import auth
 from django.contrib.auth.views import LoginView
-from django.db.models import Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
 
-from news.models import Categories, News
-from .models import User
-from .forms import LoginForm, RegisterForm
+from news.models import Categories
+from .models import User, Newsletter
+from .forms import LoginForm, RegisterForm, UpdateUserForm
+from .service import send
 
 
 # Create your views here.
@@ -45,17 +45,9 @@ class UserCreateView(CreateView):
 class UserUpdateView(UpdateView):
     """Редактирование информации"""
     model = User
-    fields = ['email', 'username', 'first_name', 'last_name']
+    form_class = UpdateUserForm
     template_name = 'users/account_create.html'
     success_url = reverse_lazy('account')
-
-    def get_form(self, *args, **kwargs):
-        form = super(UserUpdateView, self).get_form(*args, **kwargs)
-        form.fields["email"].widget.attrs["class"] = "form-control"
-        form.fields["username"].widget.attrs["class"] = "form-control"
-        form.fields["first_name"].widget.attrs["class"] = "form-control"
-        form.fields["last_name"].widget.attrs["class"] = "form-control"
-        return form
 
     def get_object(self):
         return get_object_or_404(User, id=self.request.user.id)
@@ -71,11 +63,6 @@ class InterestsListView(ListView):
     def get_queryset(self):
         queryset = self.get_object()
         return queryset.interests.all()
-
-    def get_context_data(self, **kwargs):
-        context = super(InterestsListView, self).get_context_data(**kwargs)
-        context['categories'] = Categories.objects.all()
-        return context
 
 
 class RemoveNewsAccount(View):
@@ -102,3 +89,17 @@ class FilterNewsInterestsTView(ListView):
         context = super(FilterNewsInterestsTView, self).get_context_data(**kwargs)
         context['categories'] = Categories.objects.all()
         return context
+
+
+class NewsletterView(View):
+    def post(self, request):
+        user = User.objects.get(id=request.user.id)
+        category_list = request.POST.getlist("category")
+        _, user_bool = Newsletter.objects.update_or_create(user=user)
+        if not user_bool:
+            _.categories.set(category_list)
+        else:
+            send(user=user, categories_id=category_list)
+            for category in category_list:
+                _.categories.add(int(category))
+        return redirect('account')

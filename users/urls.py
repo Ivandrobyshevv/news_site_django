@@ -10,5 +10,6 @@ urlpatterns = [
     path('interests/', views.InterestsListView.as_view(), name='interests'),
     path('remove/', views.RemoveNewsAccount.as_view(), name="remove"),
     path('filter/', views.FilterNewsInterestsTView.as_view(), name='filter'),
+    path('newsletter/', views.NewsletterView.as_view(), name='newsletter'),
 
 ]

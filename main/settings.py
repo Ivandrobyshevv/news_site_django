@@ -195,3 +195,17 @@ CKEDITOR_CONFIGS = {
 # end CKEditor
 
 LOGIN_REDIRECT_URL = '/'
+
+# SMTP_BACKEND
+# https://django.fun/ru/docs/django/4.1/topics/email/
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = "smtp.mail.ru"
+EMAIL_PORT = "465"
+EMAIL_HOST_USER = "drobyshev_ivan00@mail.ru"
+EMAIL_HOST_PASSWORD = "zizjx7pLbqtKvBfdswni"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+# timeout: EMAIL_TIMEOUT
+# ssl_keyfile: EMAIL_SSL_KEYFILE
+# ssl_certfile: EMAIL_SSL_CERTFILE

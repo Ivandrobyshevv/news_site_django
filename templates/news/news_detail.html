@@ -35,7 +35,6 @@
             <p class="text">{{ news.content|safe }}</p>
         </div>
         {% if user.is_authenticated %}
-            <hr>
             {% include 'inc/add_like.html' with news_post_id=news.id %}
         {% else %}
         {% endif %}

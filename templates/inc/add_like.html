@@ -7,7 +7,7 @@
     {% news_likes_id news_post_id as news_likes_id %}
 {% endif %}
 <form action="{% if not is_liked_bool %}{% url "add-likes" %}{% else %}{% url "remove-likes" %}{% endif %}"
-      method="post">
+      method="post" class="mt-2">
     {% csrf_token %}
     <input type="hidden" name="news_id" value="{{ news_post_id }}">
     <input type="hidden" name="user_id" value="{{ user.id }}">
@@ -16,13 +16,13 @@
     {% if is_liked_bool %}
         <input type="hidden" name="news_likes_id" value="{{ news_likes_id }}">
     {% endif %}
-
-    <button type="submit">
+    <button type="submit" class="btn btn-danger btn-sm">
+    <i>Likes:</i>
         {% if not is_liked_bool %}
-            <i class="fi-xnluxl-heart">&#9825</i>
+            <i class="">&#9825</i>
         {% else %}
-            <i class="fi-xnluxl-heart-solid">&#9829</i>
+            <i class="">&#9829</i>
         {% endif %}
-        <span class="">{{ likes_counter }}</span>
+        <span>{{ likes_counter }}</span>
     </button>
 </form>

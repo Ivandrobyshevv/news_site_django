@@ -1,5 +1,5 @@
 from django import template
-from users.models import Likes
+from users.models import Likes, Newsletter
 
 register = template.Library()
 
@@ -23,3 +23,13 @@ def count_likes(news_id):
 def news_likes_id(context, news_id):
     request = context['request']
     return Likes.objects.get(news_id=news_id, user=request.user.id).id
+
+
+@register.simple_tag(takes_context=True)
+def news_letter(context):
+    request = context['request']
+    try:
+        news_litter_user = Newsletter.objects.get(user_id=request.user.id).categories.all()
+    except Exception as e:
+        news_litter_user = None
+    return news_litter_user

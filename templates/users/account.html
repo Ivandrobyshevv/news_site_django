@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}Аккаунт - {{ user.username| title }}{% endblock %}
 {% block main %}
-    <div class="container mt-5">
+    <div class="container mt-3">
         <div class="row">
             <div class="col-3">
                 {% include 'inc/navmenu_account.html' %}
             </div>
-            <div class="col">
+            <div class="col mb-3">
                 <form>
                     <fieldset disabled>
                         <legend>{{ user.username|title }}</legend>
@@ -36,6 +36,7 @@
                     <a href="{% url 'account_create' %}" class="btn btn-primary">Изменить</a>
                 </form>
             </div>
+            {% include 'inc/mailing_list.html' %}
         </div>
     </div>
 {% endblock %}

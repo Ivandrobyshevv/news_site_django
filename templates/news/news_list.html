@@ -16,7 +16,6 @@
                                 <small> <a class="link-secondary"
                                            href="{{ news.category.get_absolute_url }}">{{ news.category }}</a></small>
                                 {% if user.is_authenticated %}
-                                    <hr>
                                     {% include 'inc/add_like.html' with news_post_id=news.id %}
                                 {% else %}
                                 {% endif %}
