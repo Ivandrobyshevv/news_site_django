@@ -1,7 +1,6 @@
 import datetime
 
 from celery import shared_task
-from celery.schedules import crontab
 
 from django.conf import settings
 from django.core.mail import send_mail
@@ -41,7 +40,7 @@ def send_category_subscription(email_address, categories_id, title="Подпис
 
 @shared_task
 def send_new_news_post():
-    """Отправка новых новостей ежедневно в 20:00 """
+    """Отправка новых новостей настройка в админке"""
     list_email, list_news = get_email_list_and_news_queryset()
     if not len(list_email) > 1:
         msg_html = loader.render_to_string('massage/message_2.html', context={'list_news': list_news})
