@@ -1,8 +1,10 @@
 {% extends 'news/base.html' %}
 {% load static %}
 {% block title %}Новости{% endblock title %}
-{% block content %}
+{% block navmenu %}
     {% include 'inc/navmenu.html' %}
+{% endblock %}
+{% block content %}
     <hr>
     <div class="offcanvas-lg offcanvas-end flex-grow-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel"
          data-bs-scroll="true">
@@ -12,7 +14,11 @@
                     {% include 'inc/add_news.html' %}
                 </li>
                 <li class="nav-item col-lg-auto">
-                    <p class="text-secondary">{{ news.created_at|date:"d.m.y" }}</p>
+                    {% if news.created_at == now %}
+                        <p class="text-secondary">{{ news.created_at|date:"H:m" }}</p>
+                    {% else %}
+                        <p class="text-secondary">{{ news.created_at|date:"H:m d.m.Y" }}</p>
+                    {% endif %}
                 </li>
                 <li class="nav-item col-lg-auto">
                     <p class="text-secondary mx-3">{{ news.category }}</p>

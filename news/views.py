@@ -13,6 +13,7 @@ class NewsListView(ListView):
     """Все новости"""
     model = News
     queryset = News.objects.filter(is_published=False)
+    paginate_by = 8
 
 
 class NewsDitailView(DetailView):

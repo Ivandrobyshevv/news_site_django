@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     # include app
     'ckeditor',
     'ckeditor_uploader',
+    'django_celery_beat',
 
     # my apps
     'news',
@@ -206,6 +207,9 @@ EMAIL_HOST_USER = "drobyshev_ivan00@mail.ru"
 EMAIL_HOST_PASSWORD = "zizjx7pLbqtKvBfdswni"
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-# timeout: EMAIL_TIMEOUT
-# ssl_keyfile: EMAIL_SSL_KEYFILE
-# ssl_certfile: EMAIL_SSL_CERTFILE
+
+
+# Celery settings
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"

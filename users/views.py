@@ -7,9 +7,9 @@ from django.views import View
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
 
 from news.models import Categories
-from .models import User, Newsletter
-from .forms import LoginForm, RegisterForm, UpdateUserForm
-from .service import send
+from .models import User, Newsletter, Feedback
+from .forms import LoginForm, RegisterForm, UpdateUserForm, FeedbackForm
+from .tasks import send_feedback_email_task, send_category_subscription
 
 
 # Create your views here.
@@ -97,9 +97,23 @@ class NewsletterView(View):
         category_list = request.POST.getlist("category")
         _, user_bool = Newsletter.objects.update_or_create(user=user)
         if not user_bool:
+            send_category_subscription.delay(email_address=user.email, categories_id=category_list,
+                                             title="Изменение категорий")
             _.categories.set(category_list)
         else:
-            send(user=user, categories_id=category_list)
+            send_category_subscription.delay(email_address=user.email, categories_id=category_list)
             for category in category_list:
                 _.categories.add(int(category))
         return redirect('account')
+
+
+class FeedbackFormView(CreateView):
+    model = Feedback
+    template_name = "users/feedback.html"
+    form_class = FeedbackForm
+    success_url = reverse_lazy('feedback')
+
+    def form_valid(self, form):
+        form.save()
+        send_feedback_email_task.delay(form.instance.email, form.instance.message)
+        return super().form_valid(form)

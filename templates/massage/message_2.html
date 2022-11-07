@@ -1,0 +1,11 @@
+<h1>Вышли новые новости</h1>
+
+<ul>
+    {% for news in list_news %}
+
+    <li>
+        {{ news.title }}
+        <small>{{ news.category }}</small>
+    </li>
+    {% endfor %}
+</ul>

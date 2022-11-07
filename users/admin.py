@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Likes, Newsletter
+from .models import User, Likes, Newsletter, Feedback
 
 
 # Register your models here.
@@ -18,3 +18,8 @@ class LikesAdmin(admin.ModelAdmin):
 @admin.register(Newsletter)
 class NewsLetterAdmin(admin.ModelAdmin):
     list_display = ('user',)
+
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ('email', 'message', 'create_at')

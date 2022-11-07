@@ -7,6 +7,7 @@
                 {% include 'inc/navmenu_account.html' %}
             </div>
             <div class="col mb-3">
+                {% block account %}
                 <form>
                     <fieldset disabled>
                         <legend>{{ user.username|title }}</legend>
@@ -35,8 +36,11 @@
                     </fieldset>
                     <a href="{% url 'account_create' %}" class="btn btn-primary">Изменить</a>
                 </form>
+                    {% endblock %}
             </div>
+        {% block newslist %}
             {% include 'inc/mailing_list.html' %}
+            {% endblock %}
         </div>
     </div>
 {% endblock %}

@@ -12,6 +12,11 @@
                                 <a class="link-dark text-decoration-none"
                                    href="{{ news.get_absolute_url }}">{{ news.title }}</a>
                                 <br>
+                                {% if news.created_at == now %}
+                                    <small class="text-secondary">{{ news.created_at|date:"H:m" }}</small>
+                                {% else %}
+                                    <small class="text-secondary">{{ news.created_at|date:"d.m" }}</small>
+                                {% endif %}
                                 <small class="fw-lighter"></small>
                                 <small> <a class="link-secondary"
                                            href="{{ news.category.get_absolute_url }}">{{ news.category }}</a></small>
@@ -24,6 +29,9 @@
                     {% endfor %}
                     </tbody>
                 </table>
+            </div>
+            <div class="col-12">
+                {% include 'inc/pag.html' %}
             </div>
         </div>
     </section>

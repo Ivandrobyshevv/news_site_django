@@ -23,7 +23,7 @@ class Likes(models.Model):
 
 class Newsletter(models.Model):
     user = models.ForeignKey(User, verbose_name="Пользователе", on_delete=models.CASCADE)
-    categories = models.ManyToManyField(Categories, verbose_name="Категории")
+    categories = models.ManyToManyField(Categories, verbose_name="Категории", related_name="cat")
     create_at = models.DateTimeField("Дата подписки", auto_now_add=True)
 
     def __str__(self):
@@ -32,3 +32,10 @@ class Newsletter(models.Model):
     class Meta:
         verbose_name = "Рассылка"
         verbose_name_plural = "Рассылка"
+
+
+class Feedback(models.Model):
+    """Обратная связь"""
+    email = models.EmailField()
+    message = models.TextField()
+    create_at = models.DateTimeField(auto_now_add=True)
